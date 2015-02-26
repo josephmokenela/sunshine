@@ -4,6 +4,7 @@ package mmjmicrosystems.co.za.sunshine.app;
  * Created by CodeTribe1 on 2015-02-25.
  */
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +60,7 @@ public class ForecastFragment extends Fragment {
 
         if (id == R.id.action_refresh) {
             FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
-            fetchWeatherTask.execute();
+            fetchWeatherTask.execute("94043");
             return true;
         }
 
@@ -72,6 +74,7 @@ public class ForecastFragment extends Fragment {
 
         ListView listView = (ListView)rootView.findViewById(R.id.listview_forecast);
 
+       // TextView postalCodeTextView = (TextView) rootView.findViewById(R.id.postal_code);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,12 +86,12 @@ public class ForecastFragment extends Fragment {
 
         // Create the array of strings to put some dummy data
         String[] forecastArray = new String[]{  "Today - Sunny 50/60",
-                "Tomorrow - Cloudy 20/30",
-                "Thursday - Rainy 40/60",
-                "Friday - Sunny 34/65",
-                "Saturday - Foggy 30/50",
-                "Sunday - Sunny 20/60",
-                "Monday - Cloudy 70/90"};
+                                                "Tomorrow - Cloudy 20/30",
+                                                "Thursday - Rainy 40/60",
+                                                "Friday - Sunny 34/65",
+                                                "Saturday - Foggy 30/50",
+                                                "Sunday - Sunny 20/60",
+                                                "Monday - Cloudy 70/90"};
 
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
 
@@ -100,20 +103,43 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    public  class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
+    public  class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
             String forecastJsonStr = null;
 
+            String format = "json";
+            String units = "metric";
+            int numberOfDays = 7;
+
             try {
+
+                final String FORECAST_BASE_URL =
+                        "http://api.openweathermap.org/data/2.5/forecast/daily?";
+                final String QUERY_PARAM = "q";
+                final String FORMAT_PARAM = "mode";
+                final String UNITS_PARAM = "units";
+                final String DAYS_PARAM = "cnt";
+
+                Uri buildUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                        .appendQueryParameter(QUERY_PARAM, params[0])
+                        .appendQueryParameter(FORMAT_PARAM, format)
+                        .appendQueryParameter(UNITS_PARAM, units)
+                        .appendQueryParameter(DAYS_PARAM, Integer.toString(numberOfDays))
+                        .build();
+
+
                 // Construct the url for the openWeather Map query
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+                //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+
+                // This is the url that is being build from the input
+                URL url = new URL(buildUri.toString());
 
                 //Create the request to openWeather and create the connection
                 urlConnection = (HttpURLConnection) url.openConnection();

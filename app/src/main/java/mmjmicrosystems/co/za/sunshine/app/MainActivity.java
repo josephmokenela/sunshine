@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final String TAG = "Sunshine";
+    public static final String LOG_TAG = "Sunshine";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
