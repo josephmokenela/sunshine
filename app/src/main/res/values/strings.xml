@@ -5,6 +5,7 @@
     <string name="today_date">February 17</string>
     <string name="maximum_temperature">21</string>
     <string name="minimum_temperature">8</string>
+    <string name="action_refresh" translatable="false">Refresh</string>
 
     <string-array name="weatherForecastList">
         <item>Today - Sunny 50/60</item>
