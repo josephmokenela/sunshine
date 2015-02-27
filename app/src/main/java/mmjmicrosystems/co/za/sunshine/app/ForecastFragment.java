@@ -40,6 +40,7 @@ import mmjmicrosystems.co.za.sunshine.library.WeatherDataParser;
 public class ForecastFragment extends Fragment {
 
     private static final String LOG_TAG = "ForecastFragment";
+    private ArrayAdapter<String> listAdapter;
 
     public ForecastFragment() {
     }
@@ -99,7 +100,8 @@ public class ForecastFragment extends Fragment {
 
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(getActivity(),
+
+        listAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
 
         listView.setAdapter(listAdapter);
@@ -111,6 +113,7 @@ public class ForecastFragment extends Fragment {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
         private WeatherDataParser weatherDataParser = new WeatherDataParser();
+
 
         @Override
         protected String[] doInBackground(String... params) {
@@ -202,6 +205,17 @@ public class ForecastFragment extends Fragment {
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+
+            if (result != null) {
+                listAdapter.clear();
+                for (String dayForecastStr:  result) {
+                    listAdapter.add(dayForecastStr);
+                }
+            }
         }
     }
 }

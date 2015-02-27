@@ -115,7 +115,7 @@ public class WeatherDataParser {
         }
 
         for (String s: resultsStr) {
-            Log.v(LOG_TAG , "Forecast entry" + s);
+            Log.v(LOG_TAG , "Forecast entry " + s);
         }
 
         return resultsStr;
