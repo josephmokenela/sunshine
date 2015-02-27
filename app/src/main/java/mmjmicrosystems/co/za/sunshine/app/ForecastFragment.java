@@ -20,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import mmjmicrosystems.co.za.sunshine.library.WeatherDataParser;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -103,11 +107,13 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    public  class FetchWeatherTask extends AsyncTask<String, Void, Void> {
+    public  class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+        private WeatherDataParser weatherDataParser = new WeatherDataParser();
 
-        protected Void doInBackground(String... params) {
+        @Override
+        protected String[] doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -187,6 +193,12 @@ public class ForecastFragment extends Fragment {
                         Log.e("PlaceholderFragment", "Error in closing a stream");
                     }
                 }
+            }
+
+            try {
+                return weatherDataParser.getWeatherDataFromJson(forecastJsonStr, numberOfDays);
+            } catch (JSONException ex) {
+                Log.e(LOG_TAG, ex.getMessage());
             }
 
             return null;
