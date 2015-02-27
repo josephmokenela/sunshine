@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -105,6 +106,14 @@ public class ForecastFragment extends Fragment {
                 R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
 
         listView.setAdapter(mForecastAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecast = mForecastAdapter.getItem(position);
+                Toast weatherInfoToast = Toast.makeText(getActivity().getApplicationContext(), forecast, Toast.LENGTH_SHORT);
+                weatherInfoToast.show();
+            }
+        });
 
         return rootView;
     }
