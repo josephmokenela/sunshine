@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ForecastFragment extends Fragment {
 
-    private static final String TAG = "ForecastFragment";
+    private static final String LOG_TAG = "ForecastFragment";
 
     public ForecastFragment() {
     }
@@ -80,7 +80,7 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "The view position clicked " + position);
+                Log.i(LOG_TAG, "The view position clicked " + position);
             }
         });
 
@@ -170,7 +170,7 @@ public class ForecastFragment extends Fragment {
                 Log.v(LOG_TAG, "Forecast JSON String " + forecastJsonStr);
 
             } catch (IOException ex) {
-                Log.e("PlaceholderFragment", "Error", ex);
+                Log.e(LOG_TAG, "Error processing the JSON String", ex);
 
                 // No need to pass the string since we got an error
                 return null;
