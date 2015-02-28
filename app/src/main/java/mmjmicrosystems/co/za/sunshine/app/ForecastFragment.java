@@ -4,6 +4,7 @@ package mmjmicrosystems.co.za.sunshine.app;
  * Created by CodeTribe1 on 2015-02-25.
  */
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -110,8 +111,11 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String forecast = mForecastAdapter.getItem(position);
-                Toast weatherInfoToast = Toast.makeText(getActivity().getApplicationContext(), forecast, Toast.LENGTH_SHORT);
-                weatherInfoToast.show();
+
+                // Launch a specific intent to load the detail activity
+                Intent launchDetailsActivity = new Intent(getActivity(), DetailActivity.class);
+                launchDetailsActivity.putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(launchDetailsActivity);
             }
         });
 
