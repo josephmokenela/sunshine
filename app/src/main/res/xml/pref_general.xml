@@ -10,4 +10,7 @@
         android:inputType="text"
         android:singleLine="true" />
 
+    <CheckBoxPreference
+        android:title="@string/pref_temperature_label" />
+
 </PreferenceScreen>

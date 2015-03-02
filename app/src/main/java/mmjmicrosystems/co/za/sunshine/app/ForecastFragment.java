@@ -58,6 +58,12 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
 
         menuInflater.inflate(R.menu.forecastfragment, menu);
@@ -68,15 +74,20 @@ public class ForecastFragment extends Fragment {
         int id = menuItem.getItemId();
 
         if (id == R.id.action_refresh) {
-            FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String location = sharedPreferences.getString(getString(R.string.pref_location_key),
-                    getString(R.string.pref_location_default));
-            fetchWeatherTask.execute(location);
+            updateWeather();
             return true;
         }
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+
+    private void updateWeather() {
+        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = sharedPreferences.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        fetchWeatherTask.execute(location);
     }
 
     @Override
@@ -96,20 +107,9 @@ public class ForecastFragment extends Fragment {
             }
         });
 
-        // Create the array of strings to put some dummy data
-        String[] forecastArray = new String[]{  "Today - Sunny 50/60",
-                                                "Tomorrow - Cloudy 20/30",
-                                                "Thursday - Rainy 40/60",
-                                                "Friday - Sunny 34/65",
-                                                "Saturday - Foggy 30/50",
-                                                "Sunday - Sunny 20/60",
-                                                "Monday - Cloudy 70/90"};
-
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
-
 
         mForecastAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
+                R.layout.list_item_forecast, R.id.list_item_forecast_textview, new ArrayList<String>());
 
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

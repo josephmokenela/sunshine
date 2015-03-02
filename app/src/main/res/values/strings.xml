@@ -27,4 +27,9 @@
 
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">94043</string>
+
+    <!-- Label for the temperature preference -->
+    <string name="pref_temperature_label">Temperature</string>
+
+
 </resources>
