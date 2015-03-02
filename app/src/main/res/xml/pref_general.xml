@@ -10,7 +10,11 @@
         android:inputType="text"
         android:singleLine="true" />
 
-    <CheckBoxPreference
-        android:title="@string/pref_temperature_label" />
+    <ListPreference
+        android:title="@string/pref_units_label"
+        android:key="@string/pref_units_key"
+        android:defaultValue="@string/pref_units_label_metric"
+        android:entryValues="@array/pref_units_values"
+        android:entries="@array/pref_units_options" />
 
 </PreferenceScreen>
