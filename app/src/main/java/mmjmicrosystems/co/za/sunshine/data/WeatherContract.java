@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.app.data;
+package  mmjmicrosystems.co.za.sunshine.data;
 
 import android.content.ContentUris;
 import android.net.Uri;
@@ -101,6 +101,22 @@ public class WeatherContract {
          * QUIZ - 4a - Columns
          * https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/e-1633698595/m-1633698597
          **/
+        public static final String TABLE_NAME = "location";
+
+        // The location setting string is what will be send to the openweathermap as the location query
+        public static final String COLUMN_LOCATION_SETTING = "location_setting";
+
+        // Human readable string, provided by the API, Because for Styling, Pretoria is much more
+        // recognizable than 964137
+        public static final String COLUMN_CITY_NAME = "city_name";
+
+        //In order to uniquely pinpoint the location on the map when
+        // we store the langitube and lattitude
+        public static final String COLUMN_COORD_LAT = "coord_lat";
+
+        public static final String COLUMN_COORD_LONG = "coord_long";
+
+
 
         /* TODO Uncomment for
         4b - Adding ContentProvider to our Contract
