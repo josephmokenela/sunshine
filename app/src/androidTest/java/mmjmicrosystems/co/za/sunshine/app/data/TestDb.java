@@ -139,11 +139,52 @@ public class TestDb extends AndroidTestCase {
          * QUIZ - 4a - InsertReadDbTest
          * https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/e-1633698604/m-1633698605
          **/
+        long weatherRowId = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, weatherValues);
+        assertTrue(weatherRowId != -1);
+
+        // A cursor is your primary interface to the query results.
+        Cursor weatherCursor = db.query(
+                WeatherContract.WeatherEntry.TABLE_NAME,  // Table to Query
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null, // columns to group by
+                null, // columns to filter by row groups
+                null  // sort order
+        );
+
+        if (!weatherCursor.moveToFirst()) {
+            fail("No weather data returned!");
+        }
+
+        assertEquals(weatherCursor.getInt(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_LOC_KEY)), locationRowId);
+        assertEquals(weatherCursor.getString(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATETEXT)), "20141205");
+        assertEquals(weatherCursor.getDouble(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DEGREES)), 1.1);
+        assertEquals(weatherCursor.getDouble(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_HUMIDITY)), 1.2);
+        assertEquals(weatherCursor.getDouble(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE)), 1.3);
+        assertEquals(weatherCursor.getInt(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP)), 75);
+        assertEquals(weatherCursor.getInt(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP)), 65);
+        assertEquals(weatherCursor.getString(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC)), "Asteroids");
+        assertEquals(weatherCursor.getDouble(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED)), 5.5);
+        assertEquals(weatherCursor.getInt(
+                weatherCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID)), 321);
+
+        weatherCursor.close();
 
         /* TODO Uncomment for
         4a - JUnit testing
         https://www.udacity.com/course/viewer#!/c-ud853/l-1639338560/m-1633698603
-        dbHelper.close();*/
+        */
+        dbHelper.close();
     }
 
 
